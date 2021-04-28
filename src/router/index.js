@@ -2,6 +2,7 @@ import { createRouter, createWebHistory } from 'vue-router'
 import Experience from '../views/Experience.vue'
 import Portfolio from '../views/Portfolio.vue'
 import Landing from '../views/Landing.vue'
+import DefaultLayout from '../layouts/DefaultLayout.vue'
 
 const routes = [
   {
@@ -10,15 +11,28 @@ const routes = [
     component: Landing
   },
   {
-    path: '/experience/:type?',
-    name: 'Experience',
-    component: Experience,
-    props: (route) => ({ type: route.params.type || 'course' })
-  },
-  {
-    path: '/portfolio',
-    name: 'Portfolio',
-    component: Portfolio
+    path: '/',
+    name: 'DefaultLayout',
+    component: DefaultLayout,
+    children: [
+      {
+        path: 'experience/:type?',
+        name: 'Experience',
+        component: Experience,
+        props: (route) => ({ type: route.params.type || 'course' }),
+        meta: {
+          transition: 'slide-left'
+        }
+      },
+      {
+        path: 'portfolio',
+        name: 'Portfolio',
+        component: Portfolio,
+        meta: {
+          transition: 'slide-right'
+        }
+      }
+    ]
   }
 ]
 
